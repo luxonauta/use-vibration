@@ -2,10 +2,23 @@
 
 > A React hook for controlling device vibration.
 
+## Installation
+
+```bash
+# Using npm
+npm install @luxonauta/use-vibration
+
+# Using yarn
+yarn add @luxonauta/use-vibration
+
+# Using pnpm
+pnpm add @luxonauta/use-vibration
+```
+
 ## Basic Usage
 
 ```tsx
-import useVibration, { VibrationPatterns } from "use-vibration";
+import useVibration, { VibrationPatterns } from "@luxonauta/use-vibration";
 
 const FeedbackButton = () => {
   const [{ isSupported, isVibrating }, { vibrate, stop }] = useVibration();

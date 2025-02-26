@@ -1,5 +1,5 @@
 {
-  "name": "use-vibration",
+  "name": "@luxonauta/use-vibration",
   "version": "1.0.0",
   "description": "A React hook for controlling device vibration",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write ."
   },
-  "author": "",
+  "author": "Lucas de França",
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
@@ -29,6 +29,9 @@
     "react": "^19.0.0",
     "ts-jest": "^29.2.6",
     "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
   },
   "keywords": ["react", "hook", "vibration", "haptic", "feedback"],
   "repository": {
