@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 /**
  * Vibration pattern - can be a single duration in milliseconds
@@ -62,7 +62,7 @@ type UseVibrationReturn = [VibrationState, VibrationControls];
  */
 const useVibration = (): UseVibrationReturn => {
   const isSupported =
-    typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function';
+    typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
 
   const [isVibrating, setIsVibrating] = useState<boolean>(false);
 
@@ -93,7 +93,7 @@ const useVibration = (): UseVibrationReturn => {
           }, pattern);
         }
       } catch (error) {
-        console.error('Error using vibration API:', error);
+        console.error("Error using vibration API:", error);
         setIsVibrating(false);
       }
     },
@@ -107,7 +107,7 @@ const useVibration = (): UseVibrationReturn => {
       navigator.vibrate(0);
       setIsVibrating(false);
     } catch (error) {
-      console.error('Error stopping vibration:', error);
+      console.error("Error stopping vibration:", error);
     }
   }, [isSupported]);
 

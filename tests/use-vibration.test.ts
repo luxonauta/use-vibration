@@ -1,7 +1,7 @@
-import { act, renderHook } from '@testing-library/react';
-import useVibration, { VibrationPatterns } from '../src';
+import { act, renderHook } from "@testing-library/react";
+import useVibration, { VibrationPatterns } from "../src";
 
-describe('\nuseVibration Hook\n', () => {
+describe("\nuseVibration Hook\n", () => {
   // Variables for navigator.vibrate mock
   let originalNavigator: Navigator;
   let vibrateMock: jest.Mock;
@@ -14,7 +14,7 @@ describe('\nuseVibration Hook\n', () => {
     vibrateMock = jest.fn().mockReturnValue(true);
 
     // Set the mock on navigator object
-    Object.defineProperty(global, 'navigator', {
+    Object.defineProperty(global, "navigator", {
       value: {
         ...originalNavigator,
         vibrate: vibrateMock,
@@ -29,7 +29,7 @@ describe('\nuseVibration Hook\n', () => {
 
   afterEach(() => {
     // Restore original navigator
-    Object.defineProperty(global, 'navigator', {
+    Object.defineProperty(global, "navigator", {
       value: originalNavigator,
       writable: true,
       configurable: true,
@@ -40,18 +40,18 @@ describe('\nuseVibration Hook\n', () => {
     jest.useRealTimers();
   });
 
-  it('Should check if the vibration is supported.', () => {
+  it("Should check if the vibration is supported.", () => {
     const { result } = renderHook(() => useVibration());
 
     expect(result.current[0].isSupported).toBe(true);
   });
 
-  it('Should return isSupported as false when vibrate is not available.', () => {
+  it("Should return isSupported as false when vibrate is not available.", () => {
     // Completely redefine navigator to ensure vibrate is undefined
     const mockNavigator = { ...originalNavigator };
     // No need to redefine mockNavigator.vibrate here
 
-    Object.defineProperty(global, 'navigator', {
+    Object.defineProperty(global, "navigator", {
       value: mockNavigator,
       writable: true,
       configurable: true,
@@ -62,7 +62,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isSupported).toBe(false);
   });
 
-  it('Should call navigator.vibrate with default duration when vibrate is called without arguments.', () => {
+  it("Should call navigator.vibrate with default duration when vibrate is called without arguments.", () => {
     const { result } = renderHook(() => useVibration());
 
     act(() => {
@@ -73,7 +73,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(true);
   });
 
-  it('Should call navigator.vibrate with a specific duration.', () => {
+  it("Should call navigator.vibrate with a specific duration.", () => {
     const { result } = renderHook(() => useVibration());
 
     act(() => {
@@ -84,7 +84,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(true);
   });
 
-  it('Should call navigator.vibrate with the vibration pattern.', () => {
+  it("Should call navigator.vibrate with the vibration pattern.", () => {
     const { result } = renderHook(() => useVibration());
     const pattern = [100, 50, 200];
 
@@ -96,7 +96,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(true);
   });
 
-  it('Should call navigator.vibrate with predefined patterns.', () => {
+  it("Should call navigator.vibrate with predefined patterns.", () => {
     const { result } = renderHook(() => useVibration());
 
     act(() => {
@@ -107,7 +107,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(true);
   });
 
-  it('Should stop vibration when stop is called.', () => {
+  it("Should stop vibration when stop is called.", () => {
     const { result } = renderHook(() => useVibration());
 
     act(() => {
@@ -124,7 +124,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(false);
   });
 
-  it('Should set isVibrating to false after vibration time for a single duration.', () => {
+  it("Should set isVibrating to false after vibration time for a single duration.", () => {
     const { result } = renderHook(() => useVibration());
 
     act(() => {
@@ -141,7 +141,7 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(false);
   });
 
-  it('Should set isVibrating to false after the total time of a vibration pattern.', () => {
+  it("Should set isVibrating to false after the total time of a vibration pattern.", () => {
     const { result } = renderHook(() => useVibration());
     const pattern = [100, 50, 200]; // Total: 350ms
 
@@ -166,18 +166,18 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(false);
   });
 
-  it('Should handle errors when calling the navigator.vibrate.', () => {
+  it("Should handle errors when calling the navigator.vibrate.", () => {
     // Mock console.error
     const consoleErrorMock = jest
-      .spyOn(console, 'error')
+      .spyOn(console, "error")
       .mockImplementation(() => {});
 
     // Define a new vibrate mock that throws an error
-    Object.defineProperty(global, 'navigator', {
+    Object.defineProperty(global, "navigator", {
       value: {
         ...originalNavigator,
         vibrate: jest.fn().mockImplementation(() => {
-          throw new Error('Vibration error');
+          throw new Error("Vibration error");
         }),
       },
       writable: true,
@@ -197,10 +197,10 @@ describe('\nuseVibration Hook\n', () => {
     consoleErrorMock.mockRestore();
   });
 
-  it('Should handle errors when calling navigator.vibrate(0) in the stop method.', () => {
+  it("Should handle errors when calling navigator.vibrate(0) in the stop method.", () => {
     // Mock console.error
     const consoleErrorMock = jest
-      .spyOn(console, 'error')
+      .spyOn(console, "error")
       .mockImplementation(() => {});
 
     // First set up a normal vibrate mock for the first call
@@ -215,11 +215,11 @@ describe('\nuseVibration Hook\n', () => {
     expect(result.current[0].isVibrating).toBe(true);
 
     // Then redefine vibrate to throw an error for the second call
-    Object.defineProperty(global, 'navigator', {
+    Object.defineProperty(global, "navigator", {
       value: {
         ...originalNavigator,
         vibrate: jest.fn().mockImplementation(() => {
-          throw new Error('Error stopping vibration');
+          throw new Error("Error stopping vibration");
         }),
       },
       writable: true,
@@ -236,17 +236,17 @@ describe('\nuseVibration Hook\n', () => {
     consoleErrorMock.mockRestore();
   });
 
-  it('Should not attempt to vibrate when the device does not support vibration.', () => {
+  it("Should not attempt to vibrate when the device does not support vibration.", () => {
     // Completely redefine navigator to ensure vibrate is undefined
     const mockNavigator = { ...originalNavigator };
 
-    Object.defineProperty(mockNavigator, 'vibrate', {
+    Object.defineProperty(mockNavigator, "vibrate", {
       value: undefined,
       writable: true,
       configurable: true,
     });
 
-    Object.defineProperty(global, 'navigator', {
+    Object.defineProperty(global, "navigator", {
       value: mockNavigator,
       writable: true,
       configurable: true,

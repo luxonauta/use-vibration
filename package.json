@@ -1,19 +1,17 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React hook for controlling device vibration",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "prepublishOnly": "npm run build",
     "format": "biome format --write .",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write ."
+    "lint": "biome check --write ."
   },
   "author": "Lucas de França",
   "license": "MIT",
