@@ -1,0 +1,12 @@
+{
+  "name": "use-vibration",
+  "version": "1.0.0",
+  "description": "A React hook for controlling device vibration",
+  "main": "use-vibration.tsx",
+  "scripts": {},
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "react": "^19.0.0"
+  }
+}
