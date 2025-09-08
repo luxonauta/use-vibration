@@ -1,6 +1,5 @@
 # Directories
 node_modules/
-coverage/
 dist/
 
 # System files

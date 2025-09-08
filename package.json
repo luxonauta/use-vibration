@@ -1,37 +1,17 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A React hook for controlling device vibration",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
-  "files": ["dist"],
-  "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "format": "biome format --write .",
-    "lint": "biome check --write ."
-  },
+  "keywords": [
+    "react",
+    "hook",
+    "vibration",
+    "haptic",
+    "feedback"
+  ],
   "author": "Lucas de França",
   "license": "MIT",
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
-    "@types/jest": "^29.5.14",
-    "@types/react": "^19.0.10",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest": "^29.7.0",
-    "react-test-renderer": "^19.0.0",
-    "react": "^19.0.0",
-    "ts-jest": "^29.2.6",
-    "typescript": "^5.7.3"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0"
-  },
-  "keywords": ["react", "hook", "vibration", "haptic", "feedback"],
+  "homepage": "https://github.com/luxonauta/use-vibration#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/luxonauta/use-vibration.git"
@@ -39,5 +19,26 @@
   "bugs": {
     "url": "https://github.com/luxonauta/use-vibration/issues"
   },
-  "homepage": "https://github.com/luxonauta/use-vibration#readme"
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --fix && prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/react": "^19.1.12",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint": "^9.35.0",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
+    "prettier": "3.6.2",
+    "react": "^19.1.1",
+    "typescript-eslint": "^8.42.0",
+    "typescript": "^5.9.2"
+  }
 }
