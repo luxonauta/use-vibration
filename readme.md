@@ -180,16 +180,16 @@ The [Vibration API](https://developer.mozilla.org/en-US/docs/Web/API/Vibration_A
    ```
 
 2. **Use sparingly**
-   Excessive vibration can be annoying and drain battery. Use only for important feedback.
+   - Excessive vibration can be annoying and drain battery. Use only for important feedback.
 
 3. **Respect user preferences**
-   Consider adding a setting to disable vibration.
+   - Consider adding a setting to disable vibration.
 
 4. **Provide alternatives**
-   Always pair vibration with visual feedback for accessibility.
+   - Always pair vibration with visual feedback for accessibility.
 
 5. **Keep patterns simple**
-   Complex patterns may not work consistently across devices.
+   - Complex patterns may not work consistently across devices.
 
 ## Limitations
 

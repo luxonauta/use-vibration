@@ -6,7 +6,7 @@
     "react",
     "hook",
     "vibration",
-    "haptic",
+    "haptics",
     "feedback"
   ],
   "author": "Lucas de França",
