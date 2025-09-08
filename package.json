@@ -1,6 +1,6 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "2.0.0",
+  "version": "1.0.2",
   "description": "A React hook for controlling device vibration",
   "keywords": [
     "react",
@@ -19,14 +19,21 @@
   "bugs": {
     "url": "https://github.com/luxonauta/use-vibration/issues"
   },
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint --fix && prettier --write ."
+    "lint": "eslint --fix . && prettier --write ."
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
@@ -40,5 +47,8 @@
     "react": "^19.1.1",
     "typescript-eslint": "^8.42.0",
     "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": ">=18"
   }
 }
