@@ -52,9 +52,9 @@ type UseVibrationReturn = [VibrationState, VibrationControls];
  * vibrate([100, 50, 200]);
  *
  * // Using predefined patterns
- * vibrate(VibrationPatterns.SUCCESS);
- * vibrate(VibrationPatterns.DOUBLE);
- * vibrate(VibrationPatterns.ERROR);
+ * vibrate(VibrationPatterns.success);
+ * vibrate(VibrationPatterns.double);
+ * vibrate(VibrationPatterns.error);
  *
  * // Stop vibration
  * stop();
@@ -66,7 +66,6 @@ const useVibration = (): UseVibrationReturn => {
 
   const [isVibrating, setIsVibrating] = useState<boolean>(false);
 
-  // Trigger
   const vibrate = useCallback(
     (pattern: VibrationPattern = 200) => {
       if (!isSupported) return;
@@ -75,29 +74,29 @@ const useVibration = (): UseVibrationReturn => {
         const didVibrate = navigator.vibrate(pattern);
         setIsVibrating(didVibrate);
 
-        // If pattern is an array, calculate total duration
         if (Array.isArray(pattern)) {
           const totalDuration = pattern.reduce(
             (sum, duration) => sum + duration,
-            0,
+            0
           );
 
-          // Auto-reset the vibrating state after the pattern completes
           setTimeout(() => {
             setIsVibrating(false);
           }, totalDuration);
         } else if (pattern > 0) {
-          // Auto-reset the vibrating state after the duration
           setTimeout(() => {
             setIsVibrating(false);
           }, pattern);
         }
       } catch (error) {
-        console.error("Error using vibration API:", error);
+        console.error(
+          "\nAn error occurred while trying to use the Vibration API:",
+          error
+        );
         setIsVibrating(false);
       }
     },
-    [isSupported],
+    [isSupported]
   );
 
   const stop = useCallback(() => {
@@ -107,13 +106,13 @@ const useVibration = (): UseVibrationReturn => {
       navigator.vibrate(0);
       setIsVibrating(false);
     } catch (error) {
-      console.error("Error stopping vibration:", error);
+      console.error("\nAn error occurred while stopping vibration:", error);
     }
   }, [isSupported]);
 
   return [
     { isSupported, isVibrating },
-    { vibrate, stop },
+    { vibrate, stop }
   ];
 };
 
