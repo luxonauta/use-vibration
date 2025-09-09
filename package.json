@@ -1,6 +1,6 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "🪝 A React hook for controlling device vibration",
   "keywords": [
     "react",
@@ -22,7 +22,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
