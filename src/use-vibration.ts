@@ -4,12 +4,12 @@ import { useCallback, useState } from "react";
  * Vibration pattern - can be a single duration in milliseconds
  * or an array of durations (vibrate, pause, vibrate, pause, ...)
  */
-type VibrationPattern = number | number[];
+export type VibrationPattern = number | number[];
 
 /**
  * Current state of the vibration functionality
  */
-interface VibrationState {
+export interface VibrationState {
   /** Whether the device supports vibration */
   isSupported: boolean;
   /** Whether the device is currently vibrating */
@@ -19,7 +19,7 @@ interface VibrationState {
 /**
  * Controls for managing device vibration
  */
-interface VibrationControls {
+export interface VibrationControls {
   /**
    * Triggers vibration with the given pattern
    * @param pattern - Duration in ms or pattern array of durations
@@ -35,7 +35,7 @@ interface VibrationControls {
 /**
  * Hook return type
  */
-type UseVibrationReturn = [VibrationState, VibrationControls];
+export type UseVibrationReturn = [VibrationState, VibrationControls];
 
 /**
  * React hook for controlling device vibration

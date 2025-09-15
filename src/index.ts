@@ -1,5 +1,9 @@
-import useVibration from "./use-vibration";
-import { VibrationPatterns } from "./vibration-patterns";
+export { default } from "./use-vibration";
+export { VibrationPatterns } from "./vibration-patterns";
 
-export { VibrationPatterns };
-export default useVibration;
+export type {
+  VibrationPattern,
+  VibrationState,
+  VibrationControls,
+  UseVibrationReturn
+} from "./use-vibration";
