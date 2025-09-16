@@ -1,16 +1,7 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "🪝 A React hook for controlling device vibration",
-  "keywords": [
-    "react",
-    "hook",
-    "vibration",
-    "haptics",
-    "feedback"
-  ],
-  "author": "Lucas de França",
-  "license": "MIT",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -19,23 +10,36 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js"
+    },
+    "./use-vibration": {
+      "types": "./dist/use-vibration.d.ts",
+      "import": "./dist/use-vibration.js"
+    },
+    "./vibration-patterns": {
+      "types": "./dist/vibration-patterns.d.ts",
+      "import": "./dist/vibration-patterns.js"
     },
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ],
+      "use-vibration": [
+        "dist/use-vibration.d.ts"
+      ],
+      "vibration-patterns": [
+        "dist/vibration-patterns.d.ts"
+      ]
+    }
+  },
   "files": [
-    "./dist"
+    "dist",
+    "readme.md",
+    "license"
   ],
-  "homepage": "https://github.com/luxonauta/use-vibration#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/luxonauta/use-vibration.git"
-  },
-  "bugs": {
-    "url": "https://github.com/luxonauta/use-vibration/issues"
-  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint --fix . && prettier --write ."
@@ -55,5 +59,22 @@
     "react": "^19.1.1",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.42.0"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "vibration",
+    "haptics",
+    "feedback"
+  ],
+  "author": "Lucas de França",
+  "license": "MIT",
+  "homepage": "https://github.com/luxonauta/use-vibration#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luxonauta/use-vibration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luxonauta/use-vibration/issues"
   }
 }
