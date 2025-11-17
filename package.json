@@ -1,6 +1,6 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "🪝 A React hook for controlling device vibration",
   "type": "module",
   "sideEffects": false,
@@ -10,28 +10,25 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "default": "./dist/index.js",
       "import": "./dist/index.js"
     },
     "./use-vibration": {
       "types": "./dist/use-vibration.d.ts",
+      "default": "./dist/use-vibration.js",
       "import": "./dist/use-vibration.js"
     },
     "./vibration-patterns": {
       "types": "./dist/vibration-patterns.d.ts",
+      "default": "./dist/vibration-patterns.js",
       "import": "./dist/vibration-patterns.js"
     },
     "./package.json": "./package.json"
   },
   "typesVersions": {
-    "*": {
+    ">=4.1": {
       "*": [
         "dist/index.d.ts"
-      ],
-      "use-vibration": [
-        "dist/use-vibration.d.ts"
-      ],
-      "vibration-patterns": [
-        "dist/vibration-patterns.d.ts"
       ]
     }
   },
@@ -48,17 +45,17 @@
     "react": ">=18"
   },
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
-    "@types/react": "^19.1.12",
-    "eslint": "^9.35.0",
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.3.0",
-    "jiti": "^2.5.1",
+    "globals": "^16.5.0",
+    "jiti": "^2.6.1",
     "prettier": "3.6.2",
-    "react": "^19.1.1",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.42.0"
+    "react": "^19.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.47.0"
   },
   "keywords": [
     "react",
