@@ -10,26 +10,15 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js",
       "import": "./dist/index.js"
     },
     "./use-vibration": {
       "types": "./dist/use-vibration.d.ts",
-      "default": "./dist/use-vibration.js",
       "import": "./dist/use-vibration.js"
     },
     "./vibration-patterns": {
       "types": "./dist/vibration-patterns.d.ts",
-      "default": "./dist/vibration-patterns.js",
       "import": "./dist/vibration-patterns.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "typesVersions": {
-    ">=4.1": {
-      "*": [
-        "dist/index.d.ts"
-      ]
     }
   },
   "files": [
@@ -46,7 +35,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@types/react": "^19.2.5",
+    "@types/react": "^19.2.6",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",

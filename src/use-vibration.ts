@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * Vibration pattern - can be a single duration in milliseconds
@@ -65,10 +65,26 @@ const useVibration = (): UseVibrationReturn => {
     typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
 
   const [isVibrating, setIsVibrating] = useState<boolean>(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearVibrationTimeout = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearVibrationTimeout();
+    };
+  }, [clearVibrationTimeout]);
 
   const vibrate = useCallback(
     (pattern: VibrationPattern = 200) => {
       if (!isSupported) return;
+
+      clearVibrationTimeout();
 
       try {
         const didVibrate = navigator.vibrate(pattern);
@@ -80,12 +96,14 @@ const useVibration = (): UseVibrationReturn => {
             0
           );
 
-          setTimeout(() => {
+          timeoutRef.current = setTimeout(() => {
             setIsVibrating(false);
+            timeoutRef.current = null;
           }, totalDuration);
         } else if (pattern > 0) {
-          setTimeout(() => {
+          timeoutRef.current = setTimeout(() => {
             setIsVibrating(false);
+            timeoutRef.current = null;
           }, pattern);
         }
       } catch (error) {
@@ -96,11 +114,13 @@ const useVibration = (): UseVibrationReturn => {
         setIsVibrating(false);
       }
     },
-    [isSupported]
+    [isSupported, clearVibrationTimeout]
   );
 
   const stop = useCallback(() => {
     if (!isSupported) return;
+
+    clearVibrationTimeout();
 
     try {
       navigator.vibrate(0);
@@ -108,7 +128,7 @@ const useVibration = (): UseVibrationReturn => {
     } catch (error) {
       console.error("\nAn error occurred while stopping vibration:", error);
     }
-  }, [isSupported]);
+  }, [isSupported, clearVibrationTimeout]);
 
   return [
     { isSupported, isVibrating },
