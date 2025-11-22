@@ -1,6 +1,6 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "🪝 A React hook for controlling device vibration",
   "type": "module",
   "sideEffects": false,
