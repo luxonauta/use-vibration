@@ -2,7 +2,20 @@
 
 > A React hook for controlling device vibration.
 
-Why should we use more haptic feedback on the web? Please [read about it here.](https://dev.to/luxonauta/beyond-visual-why-we-should-be-using-more-haptic-feedback-on-the-web-1adg)
+Why use haptics on the web? [Beyond visual: why we should be using more haptic feedback on the web](https://dev.to/luxonauta/beyond-visual-why-we-should-be-using-more-haptic-feedback-on-the-web-1adg).
+
+## Contents
+
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [Package entry points](#package-entry-points)
+- [API reference](#api-reference)
+- [Vibration patterns](#vibration-patterns)
+- [Recipes](#recipes)
+- [Browser support and behavior](#browser-support-and-behavior)
+- [Best practices](#best-practices)
+- [Limitations](#limitations)
+- [License](#license)
 
 ## Installation
 
@@ -10,7 +23,7 @@ Why should we use more haptic feedback on the web? Please [read about it here.](
 npm install @luxonauta/use-vibration
 ```
 
-## Basic Usage
+## Quick start
 
 ```tsx
 import useVibration, { VibrationPatterns } from "@luxonauta/use-vibration";
@@ -33,7 +46,7 @@ export const Component = () => {
       </button>
       {isVibrating && (
         <button type="button" onClick={stop}>
-          Stop Vibration
+          Stop vibration
         </button>
       )}
     </>
@@ -41,160 +54,159 @@ export const Component = () => {
 };
 ```
 
-## API Reference
+## Package entry points
 
-### Hook Return Values
+The package exposes the main bundle plus two subpaths if you want smaller, explicit imports:
+
+| Import path                                   | What it loads                                                         |
+| --------------------------------------------- | --------------------------------------------------------------------- |
+| `@luxonauta/use-vibration`                    | Default hook + `VibrationPatterns` and types (same as `src/index.ts`) |
+| `@luxonauta/use-vibration/use-vibration`      | Only the hook and its types                                           |
+| `@luxonauta/use-vibration/vibration-patterns` | Only `VibrationPatterns`                                              |
+
+## API reference
+
+### `useVibration()`
+
+Returns a tuple: **`[state, controls]`** (state first, then actions).
+
+#### State
+
+| Property      | Type      | Meaning                                                                                                                                            |
+| ------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isSupported` | `boolean` | The browser exposes `navigator.vibrate`. That does not guarantee physical hardware (for example, some desktops “support” the API without a motor). |
+| `isVibrating` | `boolean` | The hook thinks a pattern you started is still running. It is driven by timers and the boolean result of `vibrate()`, not by the device motor.     |
+
+#### Controls
+
+| Method    | Signature                              | Meaning                                                                                                                                                                                                                                                                      |
+| --------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `vibrate` | `(pattern?: VibrationPattern) => void` | Start a vibration. With no argument, uses **200 ms**. Prefer calling from a **user gesture** (click, tap, key press); browsers often require [sticky user activation](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/User_activation) for the Vibration API. |
+| `stop`    | `() => void`                           | Cancel the current pattern (same idea as `navigator.vibrate(0)`).                                                                                                                                                                                                            |
+
+#### Types
 
 ```tsx
-const [state, controls] = useVibration();
-```
-
-#### State Object
-
-| Property      | Type      | Description                               |
-| ------------- | --------- | ----------------------------------------- |
-| `isSupported` | `boolean` | Whether the device supports vibration     |
-| `isVibrating` | `boolean` | Whether the device is currently vibrating |
-
-#### Controls Object
-
-| Method    | Type                                   | Description                                 |
-| --------- | -------------------------------------- | ------------------------------------------- |
-| `vibrate` | `(pattern?: VibrationPattern) => void` | Triggers vibration with an optional pattern |
-| `stop`    | `() => void`                           | Stops any ongoing vibration                 |
-
-### Types
-
-```tsx
-// Single duration or pattern array
 type VibrationPattern = number | number[];
 ```
 
-### Predefined Patterns
+- **Single number:** one pulse for that many milliseconds.
+- **Array:** alternating **vibrate** and **pause** lengths in milliseconds: index `0` vibrates, index `1` pauses, index `2` vibrates again, and so on—same as [`navigator.vibrate()`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate).
 
-The hook comes with common vibration patterns for different interactions:
+## Vibration patterns
 
-| Pattern        | Description          | Value                                                                                   |
-| -------------- | -------------------- | --------------------------------------------------------------------------------------- |
-| `tap`          | Subtle feedback      | `100`                                                                                   |
-| `standard`     | Standard vibration   | `200`                                                                                   |
-| `heavy`        | Emphasis             | `500`                                                                                   |
-| `double`       | Double-tap pattern   | `[100, 30, 100]`                                                                        |
-| `triple`       | Triple-tap pattern   | `[100, 30, 100, 30, 100]`                                                               |
-| `success`      | Success feedback     | `[100, 50, 200]`                                                                        |
-| `error`        | Error or warning     | `[300, 100, 500]`                                                                       |
-| `notification` | For notifications    | `[200, 100, 100]`                                                                       |
-| `sos`          | SOS in morse code    | `[100, 100, 100, 100, 100, 100, 300, 100, 300, 100, 300, 100, 100, 100, 100, 100, 100]` |
-| `heartbeat`    | Heartbeat simulation | `[100, 100, 100, 400]`                                                                  |
+Built-in values you can pass to `vibrate(...)`:
 
-## Advanced Usage
+| Key            | Description                               | Value                                                                                   |
+| -------------- | ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| `tap`          | Light, quick feedback                     | `100`                                                                                   |
+| `standard`     | Default-style single pulse                | `200`                                                                                   |
+| `heavy`        | Stronger single pulse                     | `500`                                                                                   |
+| `double`       | Two pulses with a short gap               | `[100, 30, 100]`                                                                        |
+| `triple`       | Three pulses with gaps                    | `[100, 30, 100, 30, 100]`                                                               |
+| `success`      | Short, pause, longer—often feels positive | `[100, 50, 200]`                                                                        |
+| `error`        | Longer, more noticeable warning-style     | `[300, 100, 500]`                                                                       |
+| `notification` | Useful for alerts or toasts               | `[200, 100, 100]`                                                                       |
+| `sos`          | Morse SOS (`... --- ...`)                 | `[100, 100, 100, 100, 100, 100, 300, 100, 300, 100, 300, 100, 100, 100, 100, 100, 100]` |
+| `heartbeat`    | Two quick beats, rest, then a third       | `[100, 100, 100, 400]`                                                                  |
 
-### Custom Patterns
+## Recipes
 
-You can create custom vibration patterns using arrays where:
-
-- Even-indexed elements (`0`, `2`, `4`, ...) specify vibration durations;
-- Odd-indexed elements (`1`, `3`, `5`, ...) specify pause durations.
+### Custom patterns
 
 ```tsx
-// Pattern: vibrate 200ms → pause 100ms → vibrate 400ms → pause 100ms → vibrate 200ms
+// Vibrate 200ms → pause 100ms → vibrate 400ms → pause 100ms → vibrate 200ms
 const customPattern = [200, 100, 400, 100, 200];
 vibrate(customPattern);
 ```
 
-### Creating UI Feedback
+### Success and error feedback
 
 ```tsx
 const FeedbackApp = () => {
   const [, { vibrate }] = useVibration();
 
   const handleSuccess = () => {
-    // Haptic feedback
     vibrate(VibrationPatterns.success);
-    // Visual feedback
     setStatus("Success!");
   };
 
   const handleError = () => {
-    // Haptic feedback
     vibrate(VibrationPatterns.error);
-    // Visual feedback
     setStatus("Error!");
   };
 
-  // App
+  // ...
 };
 ```
 
-### Game Example
+### Game-style intensity
 
 ```tsx
 const Game = () => {
   const [, { vibrate }] = useVibration();
 
-  const handleCollision = (intensity) => {
-    // Adjust the vibration based on collision intensity
+  const handleCollision = (intensity: number) => {
     const duration = Math.min(Math.round(intensity * 300), 1000);
     vibrate(duration);
   };
 
-  // Game
+  // ...
 };
 ```
 
-## Browser Compatibility
+## Browser support and behavior
 
-The [Vibration API](https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API) is supported across most modern browsers:
+The [Vibration API](https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API) is **not** Baseline: large gaps exist between browsers.
 
-### Desktop Browsers
+### Desktop
 
-- **Chrome**: `32+`;
-- **Edge**: `79+`;
-- **Opera**: `19+`;
-- **Firefox**: Not supported;
-- **Safari**: Not supported.
+- **Chrome** 32+
+- **Edge** 79+
+- **Opera** 19+
+- **Firefox** — not supported
+- **Safari** — not supported
 
-### Mobile Browsers
+### Mobile
 
-- **Chrome for Android**: `32+`;
-- **Firefox for Android**: `79+`;
-- **Opera for Android**: `19+`;
-- **Samsung Internet**: `2.0+`;
-- **"WebView Android"**: `4.4.3+`;
-- **Safari iOS**: Not supported.
+- **Chrome for Android** 32+
+- **Firefox for Android** 79+
+- **Opera for Android** 19+
+- **Samsung Internet** 2.0+
+- **WebView Android** 4.4.3+
+- **Safari on iOS** — not supported
 
-### Important Notes
+### Things to expect
 
-- The Vibration API is primarily designed for mobile devices;
-- Desktop browsers may support the API, but won't produce actual vibration.
+- Built for phones and tablets; desktop support does not mean you will feel anything.
+- Many engines require a **recent user interaction** before vibration runs.
+- **Silent mode** or **Do Not Disturb** can mute vibration even when the API exists.
+- **Very long** patterns may be **truncated** by the browser.
+- Vibration may **not run** while the page is in the **background**.
 
-> **Recommendation**: Always check `isSupported` before using vibration features in your app.
+Always branch on `isSupported` and keep non-haptic feedback (visual, text) as the primary cue.
 
-## Best Practices
+## Best practices
 
-1. **Always check support first**
+1. **Check support first**
 
    ```tsx
    const [{ isSupported }] = useVibration();
    if (!isSupported) return <AlternativeFeedback />;
    ```
 
-2. **Use sparingly**
-   - Excessive vibration can be annoying and drain battery. Use only for important feedback.
+2. **Use sparingly** — Overuse drains battery and annoys users. Reserve for meaningful moments.
 
-3. **Respect user preferences**
-   - Consider adding a setting to disable vibration.
+3. **Respect preferences** — Offer a setting to turn haptics off.
 
-4. **Provide alternatives**
-   - Always pair vibration with visual feedback for accessibility.
+4. **Pair with visible feedback** — Screen readers and silent devices still need a clear UI response.
 
-5. **Keep patterns simple**
-   - Complex patterns may not work consistently across devices.
+5. **Keep patterns simple** — Long or dense arrays behave inconsistently across hardware.
 
 ## Limitations
 
-- Some Android devices may ignore pattern details and use their default vibration;
-- Vibration might not work when browser is in background.
+- Some Android devices simplify or ignore fine-grained patterns.
+- Background tabs and OS modes can block vibration regardless of `isSupported`.
 
 ## License
 

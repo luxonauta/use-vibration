@@ -1,37 +1,39 @@
 /**
- * Common vibration patterns for different user interactions
+ * Ready-made durations and sequences you can pass to `vibrate(...)`.
+ *
+ * Treat these as starting points; devices may still shorten or ignore patterns.
  */
 export const VibrationPatterns = {
-  /** Short 100ms vibration for subtle feedback */
+  /** A quick, light buzz—good for ordinary button taps. */
   tap: 100,
 
-  /** Standard 200ms vibration */
+  /** A medium-length single pulse; matches the hook’s default length. */
   standard: 200,
 
-  /** Longer 500ms vibration for emphasis */
+  /** A longer single pulse when you want stronger emphasis. */
   heavy: 500,
 
-  /** Double-tap pattern: vibrate-pause-vibrate */
+  /** Two short buzzes with a small gap—reads like a double tap. */
   double: [100, 30, 100],
 
-  /** Triple-tap pattern: vibrate-pause-vibrate-pause-vibrate */
+  /** Three short buzzes with gaps—slightly more emphasis than `double`. */
   triple: [100, 30, 100, 30, 100],
 
-  /** Success feedback pattern */
+  /** A short pulse, a pause, then a longer pulse—often feels “positive”. */
   success: [100, 50, 200],
 
-  /** Error or warning pattern - longer and more noticeable */
+  /** Longer pulses with a gap—stands out more than `success`. */
   error: [300, 100, 500],
 
-  /** Pattern for notifications */
+  /** Medium pulse plus two shorter ones—handy for alerts or toasts. */
   notification: [200, 100, 100],
 
-  /** SOS pattern in morse code: ... --- ... */
+  /** Morse “SOS” (`... --- ...`) as vibrate/pause timings. */
   sos: [
     100, 100, 100, 100, 100, 100, 300, 100, 300, 100, 300, 100, 100, 100, 100,
     100, 100
   ],
 
-  /** Heartbeat-like pattern */
+  /** Two quick beats, a rest, then a third—similar to a heartbeat rhythm. */
   heartbeat: [100, 100, 100, 400]
 };

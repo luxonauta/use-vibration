@@ -1,44 +1,71 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * Vibration pattern - can be a single duration in milliseconds
- * or an array of durations (vibrate, pause, vibrate, pause, ...)
+ * How long the device should vibrate, or a full on-off sequence.
+ *
+ * Pass a single number to buzz once for that many milliseconds. Pass an array
+ * to alternate vibration time and pause time: first value is vibrate, second is
+ * pause, third is vibrate again, and so on (same rules as `navigator.vibrate`).
+ *
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate | MDN: Navigator.vibrate()}
  */
 export type VibrationPattern = number | number[];
 
 /**
- * Current state of the vibration functionality
+ * Read-only snapshot of whether vibration is available and running.
  */
 export interface VibrationState {
-  /** Whether the device supports vibration */
+  /**
+   * `true` when the browser exposes `navigator.vibrate` (the API exists). This
+   * does not guarantee the user will feel haptics (for example, desktop
+   * browsers may report support without hardware).
+   */
   isSupported: boolean;
-  /** Whether the device is currently vibrating */
+  /**
+   * `true` while a vibration you started is expected to still be running. The
+   * browser can still block or shorten the pulse; this flag follows the hook’s
+   * timing, not the physical motor.
+   */
   isVibrating: boolean;
 }
 
 /**
- * Controls for managing device vibration
+ * Imperative actions to start or stop vibration.
  */
 export interface VibrationControls {
   /**
-   * Triggers vibration with the given pattern
-   * @param pattern - Duration in ms or pattern array of durations
+   * Starts a vibration. Call it from a user gesture (tap, click, etc.); many
+   * browsers require that for `navigator.vibrate` to run.
+   *
+   * @param pattern - One duration in milliseconds, or an alternating
+   *   vibrate/pause list. If you omit this argument, the hook uses 200 ms.
    */
   vibrate: (pattern?: VibrationPattern) => void;
 
   /**
-   * Stops any ongoing vibration
+   * Cancels the current pattern the same way as `navigator.vibrate(0)`.
    */
   stop: () => void;
 }
 
 /**
- * Hook return type
+ * Tuple returned by {@link useVibration}: `[state, controls]`.
  */
 export type UseVibrationReturn = [VibrationState, VibrationControls];
 
 /**
- * React hook for controlling device vibration
+ * React hook around the Vibration API (`navigator.vibrate`).
+ *
+ * Typical flow: read `isSupported`, then call `vibrate` from an event handler.
+ * Use `stop` to cancel early. `isVibrating` is cleared after the pattern you
+ * passed should have finished (single number or sum of array entries).
+ *
+ * **Browser notes (from MDN):** vibration may do nothing without a recent user
+ * interaction, in silent/Do Not Disturb mode, or when the tab is in the
+ * background. Very long patterns may be capped by the browser.
+ *
+ * @returns A two-element array: state first, then controls (mirrors hooks like
+ *   `useState`).
  *
  * @example
  * ```tsx
@@ -59,6 +86,8 @@ export type UseVibrationReturn = [VibrationState, VibrationControls];
  * // Stop vibration
  * stop();
  * ```
+ *
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API | MDN: Vibration API}
  */
 const useVibration = (): UseVibrationReturn => {
   const isSupported =
