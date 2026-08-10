@@ -68,21 +68,21 @@ The package exposes the main bundle plus two subpaths if you want smaller, expli
 
 ### `useVibration()`
 
-Returns a tuple: **`[state, controls]`** (state first, then actions).
+Returns a tuple: **`[state, controls]`** (state first, then controls).
 
 #### State
 
-| Property      | Type      | Meaning                                                                                                                                            |
-| ------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `isSupported` | `boolean` | The browser exposes `navigator.vibrate`. That does not guarantee physical hardware (for example, some desktops “support” the API without a motor). |
-| `isVibrating` | `boolean` | The hook thinks a pattern you started is still running. It is driven by timers and the boolean result of `vibrate()`, not by the device motor.     |
+| Property      | Type      | Meaning                                                                                                                                                       |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isSupported` | `boolean` | The browser exposes `navigator.vibrate`. That does not guarantee physical hardware is present (for example, some desktops "support" the API without a motor). |
+| `isVibrating` | `boolean` | The hook thinks a pattern you started is still running. It is driven by timers and the boolean result of `navigator.vibrate()`, not by the device motor.      |
 
 #### Controls
 
-| Method    | Signature                              | Meaning                                                                                                                                                                                                                                                                      |
-| --------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `vibrate` | `(pattern?: VibrationPattern) => void` | Start a vibration. With no argument, uses **200 ms**. Prefer calling from a **user gesture** (click, tap, key press); browsers often require [sticky user activation](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/User_activation) for the Vibration API. |
-| `stop`    | `() => void`                           | Cancel the current pattern (same idea as `navigator.vibrate(0)`).                                                                                                                                                                                                            |
+| Method    | Signature                              | Meaning                                                                                                                                                                                                                                                                     |
+| --------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `vibrate` | `(pattern?: VibrationPattern) => void` | Start a vibration. With no argument, uses **200ms**. Prefer calling from a **user gesture** (click, tap, key press); browsers often require [sticky user activation](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/User_activation) for the Vibration API. |
+| `stop`    | `() => void`                           | Cancel the current pattern (same idea as `navigator.vibrate(0)`).                                                                                                                                                                                                           |
 
 #### Types
 
@@ -199,7 +199,7 @@ Always branch on `isSupported` and keep non-haptic feedback (visual, text) as th
 
 3. **Respect preferences** — Offer a setting to turn haptics off.
 
-4. **Pair with visible feedback** — Screen readers and silent devices still need a clear UI response.
+4. **Pair with non-haptic feedback** — Visual cues for silent or unsupported devices, and announced (ARIA) cues for screen reader users, since neither can perceive vibration alone.
 
 5. **Keep patterns simple** — Long or dense arrays behave inconsistently across hardware.
 

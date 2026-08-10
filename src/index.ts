@@ -1,9 +1,9 @@
-export { default } from "./use-vibration";
-export { VibrationPatterns } from "./vibration-patterns";
+export { default } from "./use-vibration.js";
+export { VibrationPatterns } from "./vibration-patterns.js";
 
 export type {
   VibrationPattern,
   VibrationState,
   VibrationControls,
   UseVibrationReturn
-} from "./use-vibration";
+} from "./use-vibration.js";

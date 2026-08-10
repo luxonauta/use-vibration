@@ -1,6 +1,6 @@
 {
   "name": "@luxonauta/use-vibration",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "🪝 A React hook for controlling device vibration",
   "type": "module",
   "sideEffects": false,
@@ -58,7 +58,7 @@
   "homepage": "https://github.com/luxonauta/use-vibration#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/luxonauta/use-vibration.git"
+    "url": "git+https://github.com/luxonauta/use-vibration.git"
   },
   "bugs": {
     "url": "https://github.com/luxonauta/use-vibration/issues"

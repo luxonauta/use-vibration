@@ -38,7 +38,7 @@ export interface VibrationControls {
    * browsers require that for `navigator.vibrate` to run.
    *
    * @param pattern - One duration in milliseconds, or an alternating
-   *   vibrate/pause list. If you omit this argument, the hook uses 200 ms.
+   *   vibrate/pause list. If you omit this argument, the hook uses 200ms.
    */
   vibrate: (pattern?: VibrationPattern) => void;
 
